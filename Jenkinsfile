@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'python:3.8-alpine'
-            args '-p 8080:8000'
+            args '-p 8000:8080'
         }
     }
     environment {
