@@ -1,8 +1,8 @@
 pipeline {
     agent {
         docker {
-            image 'node:10-alpine'
-            args '-p 3000:3000'
+            image 'python:3.8-alpine'
+            args '-p 8080:8080'
         }
     }
     environment {
@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'npm install'
+                sh 'pip install -r requirements.txt'
             }
         }
         stage('Test') {
@@ -22,7 +22,7 @@ pipeline {
         stage('Deliver') {
             steps {
                 sh './jenkins/scripts/deliver.sh'
-                input message: 'Finished using the web site? (Click "Proceed" to continue)?'
+                input message: 'Finished using the web site? (Click "Proceed" to continue)'
                 sh './jenkins/scripts/kill.sh'
             }
         }
